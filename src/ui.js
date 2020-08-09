@@ -7,7 +7,7 @@ class UI {
     this.postSubmit = document.querySelector("#title");
     this.forState = "add";
   }
-
+  // Show posts //
   showPosts(posts) {
     let output = "";
 
@@ -31,6 +31,14 @@ class UI {
     this.post.innerHTML = output;
   }
 
+  // Fill Form to Edit //
+  fillForm(data) {
+    this.titleInput.value = data.title;
+    this.bodyInput.value = data.body;
+    this.idInput.value = data.id;
+  }
+
+  // Show Alert //
   showAlert(message, className) {
     this.clearAlert();
     // create div
@@ -52,6 +60,7 @@ class UI {
     }, 3000);
   }
 
+  // Clear Alert //
   clearAlert() {
     const currentAlert = document.querySelector(".alert");
     if (currentAlert) {
@@ -59,6 +68,7 @@ class UI {
     }
   }
 
+  // Clear all Fields //
   clearFields() {
     this.titleInput.value = "";
     this.bodyInput.value = "";

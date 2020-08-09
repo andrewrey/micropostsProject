@@ -1,19 +1,14 @@
 {
   "posts": [
     {
-      "title": "Andrew",
-      "body": "sure sure",
-      "id": 1
-    },
-    {
-      "title": "does this work",
-      "body": "yes it does",
-      "id": 2
-    },
-    {
-      "title": "wow",
-      "body": "I know eh??\n",
+      "title": "wow, no way!!!",
+      "body": "funny isn't it??\n",
       "id": 3
+    },
+    {
+      "title": "correction",
+      "body": "It has been updated",
+      "id": 4
     }
   ]
 }

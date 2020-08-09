@@ -10,6 +10,12 @@ document.querySelector(".post-submit").addEventListener("click", submitPost);
 // Listen for delete Post
 document.querySelector("#posts").addEventListener("click", deletePost);
 
+// Listen for cancel
+document.querySelector(".card-form").addEventListener("click", cancelEdit);
+
+// List for Edit state
+document.querySelector("#posts").addEventListener("click", enableEdit);
+
 function getPosts() {
   http
     .get("http://localhost:3000/posts")
@@ -17,28 +23,44 @@ function getPosts() {
     .catch((err) => console.log(err));
 }
 
-// List for Edit state
-document.querySelector("#posts").addEventListener("click", enableEdit);
-
 // Add Post
 function submitPost() {
   const title = document.querySelector("#title").value;
   const body = document.querySelector("#body").value;
+  const id = document.querySelector("#id").value;
 
   const data = {
     title,
     body,
   };
 
-  // Create Post
-  http
-    .post("http://localhost:3000/posts", data)
-    .then((data) => {
-      ui.showAlert("Post added", "alert alert-success");
-      ui.clearFields();
-      getPosts();
-    })
-    .catch((err) => console.log(err));
+  // Validate Input
+  if (title === "" || body === "") {
+    ui.showAlert("Please fill in all fields", "alert alert-danger");
+  } else {
+    // Check for ID
+    if (id === "") {
+      // Create Post
+      http
+        .post("http://localhost:3000/posts", data)
+        .then((data) => {
+          ui.showAlert("Post added", "alert alert-success");
+          ui.clearFields();
+          getPosts();
+        })
+        .catch((err) => console.log(err));
+    } else {
+      // Update Post
+      http
+        .put(`http://localhost:3000/posts/${id}`, data)
+        .then((data) => {
+          ui.showAlert("Post updated", "alert alert-success");
+          ui.changeFormState("add");
+          getPosts();
+        })
+        .catch((err) => console.log(err));
+    }
+  }
 }
 
 // Delete Post
@@ -74,6 +96,14 @@ function enableEdit(e) {
 
     // Fill form with current post
     ui.fillForm(data);
+  }
+  e.preventDefault();
+}
+
+// Cancel Edit State
+function cancelEdit(e) {
+  if (e.target.classList.contains("post-cancel")) {
+    ui.changeFormState("add");
   }
   e.preventDefault();
 }
